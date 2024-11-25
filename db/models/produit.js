@@ -21,7 +21,11 @@ const schemaProduit = new Schema({
     date : {
         type: Date,
         default: Date.now
-    }
+    },
+    quantie: {
+        type: Number,
+        required: true,
+    },
 });
 
 export const Produit = model("Produit", schemaProduit);
