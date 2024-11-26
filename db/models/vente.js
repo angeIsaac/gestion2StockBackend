@@ -10,6 +10,10 @@ const schemaVente = new Schema({
         type: Number,
         required: true,
     },
+    montant:{
+        type: Number,
+        required: true,
+    },
     date: {
         type: Date,
         default: Date.now,
