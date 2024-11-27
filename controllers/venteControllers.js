@@ -38,11 +38,11 @@ export const createVente = async (req, res) => {
     try {
         const { body } = req;
         if(!body) res.status(400).json({ message: "Body is required" });
-        if(!vente.produit) res.status(400).json({ message: "ProduitId is required" });
-        if(!vente.quantite) res.status(400).json({ message: "Quantite is required" });
-        const produitExist = await Produit.findById(vente.produitId);
+        if(!body.produit) res.status(400).json({ message: "ProduitId is required" });
+        if(!body.quantite) res.status(400).json({ message: "Quantite is required" });
+        const produitExist = await Produit.findById(body.produitId);
         if(produitExist.quantite < Vente.quantite && 0 < Vente.quantite)  res.status(400).json({ message: "quantite insuffisante" });
-        produitExist.quantite -= vente.quantite;
+        produitExist.quantite -= body.quantite;
         const newVente = await Vente(body).save();
         res.status(201).json(newVente);
     } catch (error) {
@@ -58,7 +58,12 @@ const updateVente = async (req, res) => {
         if(!id && !body) res.status(400).json({ message: "Id is required" });
         const produitExist = await Produit.findById(vente.produit);
         const vente = await Vente.findById(id);
-        
+        const result = produitExist.quantite + vente.quantite - body.quantite;
+        if(result < 0) res.status(400).json({ message: "quantite insuffisante" });
+        produitExist.quantite = result;
+        await produitExist.save();
+        const updatedVente = await Vente.findByIdAndUpdate(id, body)
+        res.status(200).json(updatedVente);
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal Server Error" });
