@@ -56,7 +56,7 @@ const updateVente = async (req, res) => {
         const { body } = req;
         const id = req.params.id;
         if(!id && !body) res.status(400).json({ message: "Id is required" });
-        const produitExist = await Produit.findById(vente.produit);
+        const produitExist = await Produit.findById(body.produit);
         const vente = await Vente.findById(id);
         const result = produitExist.quantite + vente.quantite - body.quantite;
         if(result < 0) res.status(400).json({ message: "quantite insuffisante" });
@@ -67,6 +67,5 @@ const updateVente = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal Server Error" });
-        
     }
 }

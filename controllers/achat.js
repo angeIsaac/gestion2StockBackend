@@ -42,7 +42,7 @@ export const createAchat = async (req, res) => {
         if (!body) res.status(400).json({ message: "Body is required" });
         if (!body.produit) res.status(400).json({ message: "ProduitId is required" });
         if (!body.quantite) res.status(400).json({ message: "Quantite is required" });
-        const produitExist = await Produit.findById(body.produitId);
+        const produitExist = await Produit.findById(body.produit);
         produitExist.quantite += body.quantite;
         await produitExist.save();
         const newAchat = await Achat(body).save();

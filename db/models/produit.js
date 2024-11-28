@@ -22,7 +22,7 @@ const schemaProduit = new Schema({
         type: Date,
         default: Date.now
     },
-    quantie: {
+    quantite: {
         type: Number,
         required: true,
     },
