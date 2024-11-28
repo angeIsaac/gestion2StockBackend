@@ -51,7 +51,7 @@ export const createVente = async (req, res) => {
     }
 }
 
-const updateVente = async (req, res) => {
+export const updateVente = async (req, res) => {
     try {
         const { body } = req;
         const id = req.params.id;
