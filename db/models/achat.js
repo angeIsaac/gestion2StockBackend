@@ -17,6 +17,10 @@ const schemaAchat = new Schema({
         type: Date,
         default: Date.now,
     },
+    produit: {
+        type: Schema.Types.ObjectId,
+        ref: "Produit",
+    },
 });
 
 export const Achat = model("Achat", schemaAchat);

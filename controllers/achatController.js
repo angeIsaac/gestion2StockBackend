@@ -40,11 +40,12 @@ export const deleteAchat = async (req, res) => {
 export const createAchat = async (req, res) => {
     try {
         const quantite = req.body.quantite;
+        const body = req.body;
         let produit = await Produit.findById(req.body.produit);
         if (!produit) res.status(404).json({ message: "Produit not found" });
         produit.quantite = produit.quantite + quantite;
         await produit.save();
-        const achat = new Achat(req.body).save();
+        const achat = new Achat(body).save();
         res.status(201).json(achat);
     } catch (error) {
         console.log(error);
@@ -55,12 +56,14 @@ export const createAchat = async (req, res) => {
 export const updateAchat = async (req, res) => {
     try {
         const id = req.params.id;
-        if (!id) res.status(400).json({ message: "Id is required" });
+        const body = req.body;
+        if (!id&& !body) res.status(400).json({ message: "Id is required" });
         const achat = await Achat.findById(id);
         if (!achat) res.status(404).json({ message: "Achat not found" });
-        let produit = await Produit.findById(req.body.produit);
+        let produit = await Produit.findById(body.produit);
         if (!produit) res.status(404).json({ message: "Produit not found" });
-        produit.quantite = (produit.quantite - achat.quantite) + req.body.quantite;
+        if((produit.quantite + achat.quantite) < body.quantite) res.status(400).json({ message: "quantite insuffissante" });
+        produit.quantite += (produit.quantite - achat.quantite) + body.quantite;
         await produit.save();
         const updatedAchat = await Achat.findByIdAndUpdate(id, req.body);
         res.status(200).json(updatedAchat);
