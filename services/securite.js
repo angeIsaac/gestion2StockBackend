@@ -42,3 +42,12 @@ export const logout = (req, res) => {
     }
 }
 
+export const me = async (req, res) => {
+    try {
+        const user = await Users.findById(req.userId).select("-password");
+        res.status(200).json(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
