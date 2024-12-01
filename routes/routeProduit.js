@@ -1,6 +1,7 @@
-import { deleteProduit, getProduitById, getProduits, query, updateProduit, createProduit } from "../controllers/produitControlers.js";
+import { deleteProduit, getProduitById, getProduits, query, updateProduit, createProduit, searchByNom } from "../controllers/produitControlers.js";
 import express from 'express';
 import verifyToken from "../utils/verifyToken.js";
+import { upload } from "../utils/uploadFile.js";
 
 const router = express.Router();
 
@@ -15,6 +16,8 @@ router.put("/updateProduit/:id", updateProduit);
 
 router.get("/query", query);
 
-router.post("/createProduit", createProduit);
+router.post("/createProduit", upload.single("image"), createProduit);
+
+router.get("/search-produit", searchByNom);
 
 export default router;

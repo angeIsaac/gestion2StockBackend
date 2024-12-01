@@ -26,6 +26,10 @@ const schemaProduit = new Schema({
         type: Number,
         required: true,
     },
+    image: {
+        type: String,
+        required: true,
+    },
 });
 
 export const Produit = model("Produit", schemaProduit);

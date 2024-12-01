@@ -1,4 +1,5 @@
 import { Produit } from "../db/models/produit.js";
+import { convertToB64 } from "../services/converToBinary.js";
 
 export const getProduits = async (req, res) => {
     try {
@@ -89,6 +90,10 @@ export const query = async (req, res) => {
 export const createProduit = async (req, res) => {
     try {
         const { body } = req;
+        if (req.file) {
+            const image = await convertToB64(req.file.path);
+            body.image = image;
+        }
         const produit = await new Produit(body).save();
         res.status(200).json(produit);
     } catch (error) {
@@ -96,3 +101,13 @@ export const createProduit = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
+export const searchByNom = async (req, res) => {
+    try {
+        const produit = await Produit.find({ "nom": { $regex: req.query?.nom, $options: 'i' } }).lean().exec();
+        res.status(200).json(produit);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
