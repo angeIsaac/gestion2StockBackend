@@ -1,4 +1,4 @@
-import { deleteProduit, getProduitById, getProduits, search, updateProduit, createProduit } from "../controllers/produitControlers.js";
+import { deleteProduit, getProduitById, getProduits, query, updateProduit, createProduit } from "../controllers/produitControlers.js";
 import express from 'express';
 import verifyToken from "../utils/verifyToken.js";
 
@@ -13,7 +13,7 @@ router.delete("/deleteProduit/:id", deleteProduit);
 
 router.put("/updateProduit/:id", updateProduit);
 
-router.get("/search", search);
+router.get("/query", query);
 
 router.post("/createProduit", createProduit);
 
