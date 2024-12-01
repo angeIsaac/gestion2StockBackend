@@ -6,6 +6,7 @@ export default function verifyToken(req, res, next) {
         if(!token) return res.status(401).json({message: "Unauthorized"});
         const verified = jwt.verify(token, process.env.SECRET_KEY);
         if(!verified) return res.status(401).json({message: "Unauthorized"});
+        req.userId = verified.id;
         next();
     } catch (error) {
         console.log(error);

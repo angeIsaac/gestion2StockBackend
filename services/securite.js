@@ -21,8 +21,9 @@ export const login = async (req, res) => {
 export const signup = async (req, res) => {
     try {
         const body = req.body;
-        const alreadyExists = await Users.findOne(body.email);
+        const alreadyExists = await Users.findOne({ email: body.email });
         if (alreadyExists) res.status(400).json({ message: "User already exists" });
+        body.password = await bcrypt.hash(body.password, 12);
         const user = new Users(body).save();
         generateToken(res, user._id);
         res.status(201).json({ message: "Signup successful" });

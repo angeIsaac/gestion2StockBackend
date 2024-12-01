@@ -64,7 +64,7 @@ export const search = async (req, res) => {
 export const createProduit = async (req, res) => {
     try {
         const { body } = req;
-        const produit = new Produit(body).save();
+        const produit = await new Produit(body).save();
         res.status(200).json(produit);
     } catch (error) {
         console.log(error);

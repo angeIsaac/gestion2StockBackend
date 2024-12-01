@@ -1,5 +1,5 @@
 import { login, logout, signup, me } from "../services/securite.js";
-import express from 'express';
+import express from "express";
 
 const router = express.Router();
 
@@ -9,6 +9,6 @@ router.post("/signup", signup);
 
 router.post("/logout", logout);
 
-router.get("getuser", me);
+router.get("/getuser", me);
 
 export default router;
