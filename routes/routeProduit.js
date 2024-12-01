@@ -1,7 +1,7 @@
 import { deleteProduit, getProduitById, getProduits, query, updateProduit, createProduit, searchByNom } from "../controllers/produitControlers.js";
 import express from 'express';
 import verifyToken from "../utils/verifyToken.js";
-import { upload } from "../utils/uploadFile.js";
+import { upload } from "../utils/uploadProductFile.js";
 
 const router = express.Router();
 
