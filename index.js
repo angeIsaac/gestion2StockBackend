@@ -25,4 +25,4 @@ app.use("/api/v1/achat", achatRoute);
 app.listen(port, () => {
     connect();
     console.log(`Server is running on port ${process.env.PORT}`);
-});
+})
